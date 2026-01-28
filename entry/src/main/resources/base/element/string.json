@@ -1,0 +1,228 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "AIModelChat"
+    },
+    {
+      "name": "search_baidu",
+      "value": "Baidu"
+    },
+    {
+      "name": "date_today",
+      "value": "Today"
+    },
+    {
+      "name": "date_yesterday",
+      "value": "Yesterday"
+    },
+    {
+      "name": "date_sevendays",
+      "value": "Within seven days"
+    },
+    {
+      "name": "date_thirtydays",
+      "value": "Within thirty days"
+    },
+    {
+      "name": "operation_error",
+      "value": "operation failed"
+    },
+    {
+      "name": "create_default_session_error",
+      "value": "Failed to create default session"
+    },
+    {
+      "name": "create_new_session_error",
+      "value": "Failed to create new session"
+    },
+    {
+      "name": "load_data_error",
+      "value": "Failed to load data"
+    },
+    {
+      "name": "delete_conversation_error",
+      "value": "Failed to delete conversation"
+    },
+    {
+      "name": "is_searching_ollama",
+      "value": "Searching for your Ollama"
+    },
+    {
+      "name": "is_running_ollama",
+      "value": "Ollama is running"
+    },
+    {
+      "name": "connect_ollama_error",
+      "value": "Unable to connect to Ollama"
+    },
+    {
+      "name": "placeholder_input_message",
+      "value": "Message"
+    },
+    {
+      "name": "web_search",
+      "value": "Online search"
+    },
+    {
+      "name": "is_web_searching",
+      "value": "Is webSearching"
+    },
+    {
+      "name": "deep_thinking_on",
+      "value": "Deeply thinking"
+    },
+    {
+      "name": "deep_thinking_complete",
+      "value": "Have thought deeply"
+    },
+    {
+      "name": "title_setting_normal",
+      "value": "Normal Setting"
+    },
+    {
+      "name": "title_setting_rag",
+      "value": "RAG Setting"
+    },
+    {
+      "name": "title_setting_ollama",
+      "value": "Ollama Setting"
+    },
+    {
+      "name": "title_setting_model",
+      "value": "Model Setting"
+    },
+    {
+      "name": "title_setting_knowledge",
+      "value": "Knowledge Setting"
+    },
+    {
+      "name": "title_setting_prompt",
+      "value": "Prompt Setting"
+    },
+    {
+      "name": "title_setting_share",
+      "value": "Share Setting"
+    },
+    {
+      "name": "title_setting_about",
+      "value": "About"
+    },
+    {
+      "name": "title_setting_main",
+      "value": "Setting"
+    },
+    {
+      "name": "save_success_ollama",
+      "value": "Saved successfully, Olama is connected"
+    },
+    {
+      "name": "connect_server_error",
+      "value": "cannot connect to server"
+    },
+    {
+      "name": "placeholder_ollama_ip",
+      "value": "Ollama URL IP"
+    },
+    {
+      "name": "placeholder_ollama_port",
+      "value": "Ollama URL Port"
+    },
+    {
+      "name": "save_ollama_url",
+      "value": "save"
+    },
+    {
+      "name": "model_select",
+      "value": "select model"
+    },
+    {
+      "name": "title_ollama_url",
+      "value": "ollama url"
+    },
+    {
+      "name": "dark_theme_select",
+      "value": "theme select"
+    },
+    {
+      "name": "system_theme",
+      "value": "system"
+    },
+    {
+      "name": "dark_theme",
+      "value": "dark"
+    },
+    {
+      "name": "light_theme",
+      "value": "light"
+    },
+    {
+      "name": "check_ip_illegal",
+      "value": "Non-local area network IP or IP is illegal. Please try again"
+    },
+    {
+      "name": "version_information",
+      "value": "version"
+    },
+    {
+      "name": "contact_number",
+      "value": "contact_number"
+    },
+    {
+      "name": "net_prompt",
+      "value": "please check network status"
+    },
+    {
+      "name": "new_conversation",
+      "value": "new conversation"
+    },
+    {
+      "name": "already_in_conversation",
+      "value": "In new conversation already"
+    },
+    {
+      "name": "mic_reason",
+      "value": "access the microphone for on-device speech recognition"
+    },
+    {
+      "name": "speech_speed",
+      "value": "Speech Speed"
+    },
+    {
+      "name": "release_to_send",
+      "value": "Release to send, swipe up to cancel"
+    },
+    {
+      "name": "press_to_talk",
+      "value": "Press to talk"
+    },
+    {
+      "name": "release_to_cancel",
+      "value": "Release to cancel"
+    },
+    {
+      "name": "playing",
+      "value": "Playing..."
+    },
+    {
+      "name": "speech_start",
+      "value": "Start to generate speech and play"
+    },
+    {
+      "name": "supplier_setting",
+      "value": "supplier setting"
+    },
+    {
+      "name": "title_setting_siliconflow",
+      "value": "siliconflow setting"
+    }
+  ]
+}

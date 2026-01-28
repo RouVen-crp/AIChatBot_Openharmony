@@ -1,0 +1,88 @@
+{
+  "color": [
+    {
+      "name": "start_window_background",
+      "value": "#000000"
+    },
+    {
+      "name": "item_button_background",
+      "value": "#303030"
+    },
+    {
+      "name": "list_itemgroup_background",
+      "value": "#303030"
+    },
+    {
+      "name": "normal_textinput_background",
+      "value": "#303030"
+    },
+    {
+      "name": "home_tips_background",
+      "value": "#666666"
+    },
+    {
+      "name": "home_tips_border",
+      "value": "#666666"
+    },
+    {
+      "name": "message_sendbox_background",
+      "value": "#1F1F1F"
+    },
+    {
+      "name": "user_message_background",
+      "value": "#006CDE"
+    },
+    {
+      "name": "thinking_content_font",
+      "value": "#BEBEBE"
+    },
+    {
+      "name": "history_item_selected",
+      "value": "#222B38"
+    },
+    {
+      "name": "history_item_normal",
+      "value": "#1F1F1F"
+    },
+    {
+      "name": "message_sendbox_button",
+      "value": "#006CDE"
+    },
+    {
+      "name": "sendbox_toogle_icon",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "list_item_text_primary",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "list_item_text_secondary",
+      "value": "#99FFFFFF"
+    },
+    {
+      "name": "list_item_icon",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "conversation_item_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "conversation_item_icon",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "header_bar_icon",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "header_bar_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "normal_button_background",
+      "value": "#666666"
+    }
+  ]
+}

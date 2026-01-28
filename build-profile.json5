@@ -1,0 +1,58 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\Rou_V\\.ohos\\config\\default_AIModelChat_api12_0128_Q-IN_WVZINV2pnw6ddm2FYjoQfbEZnGAJVZvfHZk-NU=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B769AED348FD6B0251935B659D8C01571043570604CE9631065BA9C8F3DD916E9172492EF7AA777",
+          "profile": "C:\\Users\\Rou_V\\.ohos\\config\\default_AIModelChat_api12_0128_Q-IN_WVZINV2pnw6ddm2FYjoQfbEZnGAJVZvfHZk-NU=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\Rou_V\\.ohos\\config\\default_AIModelChat_api12_0128_Q-IN_WVZINV2pnw6ddm2FYjoQfbEZnGAJVZvfHZk-NU=.p12",
+          "storePassword": "0000001B277FCFEBCB387DCE1799ED80C940C6C03149C4CDD78D1B4A67363DD92313378FAA0A3C11C914AC"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "targetSdkVersion": "6.0.0(20)",
+        // 修改点：与compileSdkVersion保持一致
+        "compatibleSdkVersion": "6.0.0(20)",
+        // 修改点：保持为API 12
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug"
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}

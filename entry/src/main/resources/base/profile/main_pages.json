@@ -1,0 +1,12 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/Setting",
+    "view/AboutSettingComponent",
+    "view/OllamaSettingComponent",
+    "view/NormalSettingComponent",
+    "view/ProviderSettingComponent",
+    "view/SiliconflowSettingComponent",
+    "view/OllamaUrlInput"
+  ]
+}

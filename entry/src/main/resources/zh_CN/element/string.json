@@ -1,0 +1,228 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "AIModelChat"
+    },
+    {
+      "name": "search_baidu",
+      "value": "百度"
+    },
+    {
+      "name": "date_today",
+      "value": "今天"
+    },
+    {
+      "name": "date_yesterday",
+      "value": "昨天"
+    },
+    {
+      "name": "date_sevendays",
+      "value": "七天内"
+    },
+    {
+      "name": "date_thirtydays",
+      "value": "三十天内"
+    },
+    {
+      "name": "operation_error",
+      "value": "操作失败"
+    },
+    {
+      "name": "create_default_session_error",
+      "value": "创建默认会话失败"
+    },
+    {
+      "name": "create_new_session_error",
+      "value": "创建新对话失败"
+    },
+    {
+      "name": "load_data_error",
+      "value": "加载数据失败"
+    },
+    {
+      "name": "delete_conversation_error",
+      "value": "删除会话失败"
+    },
+    {
+      "name": "is_searching_ollama",
+      "value": "正在搜索您的Ollama"
+    },
+    {
+      "name": "is_running_ollama",
+      "value": "Ollama正在运行"
+    },
+    {
+      "name": "connect_ollama_error",
+      "value": "无法连接到Ollama"
+    },
+    {
+      "name": "placeholder_input_message",
+      "value": "消息"
+    },
+    {
+      "name": "web_search",
+      "value": "联网搜索"
+    },
+    {
+      "name": "is_web_searching",
+      "value": "网络搜索中"
+    },
+    {
+      "name": "deep_thinking_on",
+      "value": "深度思考中"
+    },
+    {
+      "name": "deep_thinking_complete",
+      "value": "深度思考完成"
+    },
+    {
+      "name": "title_setting_normal",
+      "value": "一般设置"
+    },
+    {
+      "name": "title_setting_rag",
+      "value": "RAG设置"
+    },
+    {
+      "name": "title_setting_ollama",
+      "value": "Ollama"
+    },
+    {
+      "name": "title_setting_model",
+      "value": "管理模型"
+    },
+    {
+      "name": "title_setting_knowledge",
+      "value": "管理知识"
+    },
+    {
+      "name": "title_setting_prompt",
+      "value": "管理提示词"
+    },
+    {
+      "name": "title_setting_share",
+      "value": "管理共享"
+    },
+    {
+      "name": "title_setting_about",
+      "value": "关于"
+    },
+    {
+      "name": "title_setting_main",
+      "value": "设置"
+    },
+    {
+      "name": "save_success_ollama",
+      "value": "保存成功 Ollama已连接"
+    },
+    {
+      "name": "connect_server_error",
+      "value": "无法连接服务器"
+    },
+    {
+      "name": "placeholder_ollama_ip",
+      "value": "Ollama URL IP"
+    },
+    {
+      "name": "placeholder_ollama_port",
+      "value": "Ollama URL Port"
+    },
+    {
+      "name": "save_ollama_url",
+      "value": "保存"
+    },
+    {
+      "name": "model_select",
+      "value": "模型选择"
+    },
+    {
+      "name": "title_ollama_url",
+      "value": "ollama url"
+    },
+    {
+      "name": "dark_theme_select",
+      "value": "主题颜色"
+    },
+    {
+      "name": "system_theme",
+      "value": "系统"
+    },
+    {
+      "name": "dark_theme",
+      "value": "深色"
+    },
+    {
+      "name": "light_theme",
+      "value": "浅色"
+    },
+    {
+      "name": "check_ip_illegal",
+      "value": "非局域网IP或IP非法，请重试"
+    },
+    {
+      "name": "version_information",
+      "value": "版本信息"
+    },
+    {
+      "name": "contact_number",
+      "value": "反馈联系方式"
+    },
+    {
+      "name": "net_prompt",
+      "value": "请检查网络连接"
+    },
+    {
+      "name": "new_conversation",
+      "value": "新对话"
+    },
+    {
+      "name": "already_in_conversation",
+      "value": "已在新对话中"
+    },
+    {
+      "name": "mic_reason",
+      "value": "使用新一代Kaldi, 访问麦克风进行本地语音识别(不需要联网)"
+    },
+    {
+      "name": "speech_speed",
+      "value": "语速"
+    },
+    {
+      "name": "release_to_send",
+      "value": "松手发送, 上滑取消"
+    },
+    {
+      "name": "press_to_talk",
+      "value": "按住说话"
+    },
+    {
+      "name": "release_to_cancel",
+      "value": "松手取消"
+    },
+    {
+      "name": "playing",
+      "value": "正在播放中..."
+    },
+    {
+      "name": "speech_start",
+      "value": "开始语音合成并播放"
+    },
+    {
+      "name": "supplier_setting",
+      "value": "供应商选择"
+    },
+    {
+      "name": "title_setting_siliconflow",
+      "value": "硅基流动"
+    }
+  ]
+}
