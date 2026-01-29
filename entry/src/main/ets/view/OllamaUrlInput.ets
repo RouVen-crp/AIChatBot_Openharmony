@@ -50,7 +50,13 @@ struct OllamaUrlInput {
 
   getTag() {
     let httpRequest = new Http();
-    httpRequest.setUrl(`${this.ollamaStorage.ipConfig}:${this.ollamaStorage.portConfig}/api/tags`);
+    // 确保URL包含协议前缀
+    const ip = this.ollamaStorage.ipConfig || 'localhost';
+    const port = this.ollamaStorage.portConfig || '11434';
+    const url = ip.startsWith('http://') || ip.startsWith('https://') 
+      ? `${ip}:${port}/api/tags` 
+      : `http://${ip}:${port}/api/tags`;
+    httpRequest.setUrl(url);
     this.ollamaStorage.isSearchingOllama = true;
     let promise = httpRequest.request(httpRequest.url)
     promptAction.showToast({
@@ -135,30 +141,52 @@ struct OllamaUrlInput {
             this.ollamaStorage.portConfig = value;
           })
 
-        Column() {
+        Row({ space: 12 }) {
+          // 保存按钮（不测试连接，直接保存）
+          Button({ type: ButtonType.Normal }) {
+            Text('保存配置')
+              .fontSize(14)
+          }
+          .layoutWeight(1)
+          .height(44)
+          .borderRadius(12)
+          .backgroundColor($r('app.color.normal_button_background'))
+          .onClick(() => {
+            // 直接保存配置，不测试连接
+            PreferenceModel.writeData(this.ollamaStorage.ipConfig, 'ollama_setting', 'ipConfig');
+            PreferenceModel.writeData(this.ollamaStorage.portConfig, 'ollama_setting', 'portConfig');
+            promptAction.showToast({
+              message: '配置已保存'
+            });
+            Logger.info(TAG, `Config saved: ${this.ollamaStorage.ipConfig}:${this.ollamaStorage.portConfig}`);
+          })
+
+          // 测试连接并保存按钮
           Button({ type: ButtonType.Normal }) {
             if (this.ollamaStorage.isSearchingOllama) {
               LoadingProgress()
+                .color($r('sys.color.ohos_id_color_primary'))
             } else {
-              Text($r('app.string.save_ollama_url'))
+              Text('测试连接')
+                .fontSize(14)
             }
           }
+          .layoutWeight(1)
+          .height(44)
           .borderRadius(12)
-          .width(80)
-          .height(40)
-          .borderColor('#666666')
-          .borderWidth(1)
-          .backgroundColor($r('app.color.normal_button_background'))
+          .backgroundColor($r('sys.color.ohos_id_color_primary'))
           .onClick(() => {
             if (this.ollamaStorage.isSearchingOllama) {
               return;
             }
+            // 先保存配置，再测试连接
+            PreferenceModel.writeData(this.ollamaStorage.ipConfig, 'ollama_setting', 'ipConfig');
+            PreferenceModel.writeData(this.ollamaStorage.portConfig, 'ollama_setting', 'portConfig');
             this.getTag();
           })
-        }.justifyContent(FlexAlign.End)
-        .alignItems(HorizontalAlign.End)
+        }
         .width("100%")
-        .margin({ top: 10, right: 10 })
+        .margin({ top: 16 })
       }
       .padding({ left: 16, right: 16 })
     }

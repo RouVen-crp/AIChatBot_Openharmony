@@ -1,69 +1,81 @@
 {
-  "module": {
-    "name": "entry",
-    "type": "entry",
-    "description": "$string:module_desc",
-    "mainElement": "EntryAbility",
-    "deviceTypes": [
-      "default",
-      "tablet"
-    ],
-    "deliveryWithInstall": true,
-    "installationFree": false,
-    "pages": "$profile:main_pages",
-    "abilities": [
+  module: {
+    name: "entry",
+    type: "entry",
+    description: "$string:module_desc",
+    mainElement: "EntryAbility",
+    deviceTypes: ["default", "tablet"],
+    deliveryWithInstall: true,
+    installationFree: false,
+    pages: "$profile:main_pages",
+    abilities: [
       {
-        "name": "EntryAbility",
-        "srcEntry": "./ets/entryability/EntryAbility.ets",
-        "description": "$string:EntryAbility_desc",
-        "icon": "$media:startIcon",
-        "label": "$string:EntryAbility_label",
-        "startWindowIcon": "$media:startIcon",
-        "startWindowBackground": "$color:start_window_background",
-        "exported": true,
-        "skills": [
+        name: "EntryAbility",
+        srcEntry: "./ets/entryability/EntryAbility.ets",
+        description: "$string:EntryAbility_desc",
+        icon: "$media:startIcon",
+        label: "$string:EntryAbility_label",
+        startWindowIcon: "$media:startIcon",
+        startWindowBackground: "$color:start_window_background",
+        exported: true,
+        skills: [
           {
-            "entities": [
-              "entity.system.home"
-            ],
-            "actions": [
-              "action.system.home"
-            ]
-          }
-        ]
-      }
+            entities: ["entity.system.home"],
+            actions: ["action.system.home"],
+          },
+        ],
+      },
     ],
-    "extensionAbilities": [
+    extensionAbilities: [
       {
-        "name": "EntryBackupAbility",
-        "srcEntry": "./ets/entrybackupability/EntryBackupAbility.ets",
-        "type": "backup",
-        "exported": false,
-        "metadata": [
+        name: "EntryBackupAbility",
+        srcEntry: "./ets/entrybackupability/EntryBackupAbility.ets",
+        type: "backup",
+        exported: false,
+        metadata: [
           {
-            "name": "ohos.extension.backup",
-            "resource": "$profile:backup_config"
-          }
-        ]
-      }
+            name: "ohos.extension.backup",
+            resource: "$profile:backup_config",
+          },
+        ],
+      },
     ],
-    "requestPermissions": [
+    requestPermissions: [
       {
-        "name": "ohos.permission.INTERNET"
+        name: "ohos.permission.INTERNET",
       },
       {
-        "name" : "ohos.permission.GET_NETWORK_INFO"
+        name: "ohos.permission.GET_NETWORK_INFO",
       },
       {
-        "name" : "ohos.permission.MICROPHONE",
-        "reason": "$string:mic_reason",
-        "usedScene": {
-          "abilities": [
-            "EntryAbility"
-          ],
-          "when": "inuse"
-        }
-      }
-    ]
-  }
+        name: "ohos.permission.GET_WIFI_INFO",
+      },
+      {
+        name: "ohos.permission.MICROPHONE",
+        reason: "$string:mic_reason",
+        usedScene: {
+          abilities: ["EntryAbility"],
+          when: "inuse",
+        },
+      },
+      {
+        name: "ohos.permission.DISTRIBUTED_DATASYNC",
+        reason: "$string:distributed_reason",
+        usedScene: {
+          abilities: ["EntryAbility"],
+          when: "inuse",
+        },
+      },
+      // 注意：以下权限已在模拟器上注释，因为模拟器不支持该权限授权
+      // 真机部署时，如需使用软总线设备发现功能，请取消注释
+      // {
+      //   name: "ohos.permission.ACCESS_SERVICE_DM",
+      //   reason: "$string:device_manager_reason",
+      //   usedScene: {
+      //     abilities: ["EntryAbility"],
+      //     when: "inuse",
+      //   },
+      // },
+    ],
+  },
 }

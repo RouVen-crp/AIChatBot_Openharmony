@@ -7,11 +7,11 @@
         "material": {
           "certpath": "C:\\Users\\Rou_V\\.ohos\\config\\default_AIModelChat_api12_0128_Q-IN_WVZINV2pnw6ddm2FYjoQfbEZnGAJVZvfHZk-NU=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B769AED348FD6B0251935B659D8C01571043570604CE9631065BA9C8F3DD916E9172492EF7AA777",
+          "keyPassword": "0000001B03274256B11462D351BE695ACCE0598B23A6F8EE81D6081CB93BBDE956D88C07E7CD15F5CF81E0",
           "profile": "C:\\Users\\Rou_V\\.ohos\\config\\default_AIModelChat_api12_0128_Q-IN_WVZINV2pnw6ddm2FYjoQfbEZnGAJVZvfHZk-NU=.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "C:\\Users\\Rou_V\\.ohos\\config\\default_AIModelChat_api12_0128_Q-IN_WVZINV2pnw6ddm2FYjoQfbEZnGAJVZvfHZk-NU=.p12",
-          "storePassword": "0000001B277FCFEBCB387DCE1799ED80C940C6C03149C4CDD78D1B4A67363DD92313378FAA0A3C11C914AC"
+          "storePassword": "0000001B19B8079CD734EA66EC9BF249CB715E3115403CB1BEF12904DD9311C87F6BD03EF78A1489FCBF55"
         }
       }
     ],

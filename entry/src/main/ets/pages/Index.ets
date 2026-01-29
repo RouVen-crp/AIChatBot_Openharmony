@@ -32,7 +32,7 @@ import { NetJudge } from '../utils/NetJudge';
 import { BusinessError } from '@kit.BasicServicesKit';
 import { OllamaStorage } from '../model/setting/OllamaStorage';
 import { AvoidArea } from '../model/layout/AvoidData';
-import worker, { MessageEvents } from '@ohos.worker';
+import worker, { MessageEvents, ErrorEvent } from '@ohos.worker';
 import { Permissions } from '@ohos.abilityAccessCtrl';
 import audio from '@ohos.multimedia.audio';
 import { VoiceSettings } from '../model/setting/VoiceSettings';
@@ -40,6 +40,7 @@ import { allAllowed, requestPermissions } from '../workers/Permission';
 import { photoAccessHelper } from '@kit.MediaLibraryKit';
 import { ProviderStorage } from '../model/setting/ProviderStorage';
 import { SiliconflowStorage } from '../model/setting/SiliconflowStorage';
+import { EdgeModeStorage } from '../model/setting/EdgeModeStorage';
 import AiProvider from '../aiCore';
 import { CompletionsParams } from '../aiCore/middleware/schemas';
 import { blockUi } from '../interfaces/blockUi';
@@ -171,6 +172,64 @@ struct Index {
       Logger.info(TAG, 'allowed to access microphone');
     }
 
+    // 延迟初始化 Worker 和模型，避免启动时加载失败导致崩溃
+    try {
+      if (!this.workerInstance) {
+        this.workerInstance = new worker.ThreadWorker(this.scriptURL, { name: 'NonStreaming ASR worker' });
+
+        this.workerInstance.onmessage = (e: MessageEvents) => {
+          const msgType = e.data['msgType'] as string;
+          Logger.info(TAG, `receive msg from worker: ${msgType}`);
+
+          if (msgType == 'init-vad-mic-done') {
+            this.micInitDone = true;
+          }
+          if (msgType == 'non-streaming-asr-vad-mic-partial') {
+            this.resultForMic = e.data['text'] as string;
+            // 更新信息
+            this.voiceMessage = this.resultForMic;
+            // 更新提示
+            this.promptMessage2 = this.voiceMessage;
+            // 延时提交
+            setTimeout(() => {
+              // 提交
+              this.submitChat(this.voiceMessage);
+              Logger.info(TAG, `submitChat: ${this.voiceMessage}`);
+              // 还原提示信息
+              this.promptMessage2 = $r('app.string.press_to_talk');
+            }, 300);
+          }
+          if (msgType == 'non-streaming-asr-vad-mic-error') {
+            this.resultForMic = e.data['text'] as string;
+          }
+        }
+
+        this.workerInstance.onerror = (e: ErrorEvent) => {
+          Logger.error(TAG, `Worker error: ${JSON.stringify(e)}`);
+          this.resultForMic = '语音识别初始化失败';
+          this.micInitDone = false;
+        };
+
+        // 延迟初始化模型，避免启动时加载失败
+        const context = getContext();
+        setTimeout(() => {
+          try {
+            if (this.workerInstance) {
+              this.workerInstance.postMessage({ msgType: 'init-vad', context });
+              this.workerInstance.postMessage({ msgType: 'init-non-streaming-asr', context });
+            }
+          } catch (error) {
+            Logger.error(TAG, `Failed to init ASR models: ${JSON.stringify(error)}`);
+            this.resultForMic = '语音识别模型加载失败';
+          }
+        }, 1000);
+      }
+    } catch (error) {
+      Logger.error(TAG, `Failed to create ASR worker: ${JSON.stringify(error)}`);
+      this.resultForMic = '语音识别功能不可用';
+      return;
+    }
+
     const audioStreamInfo: audio.AudioStreamInfo = {
       samplingRate: audio.AudioSamplingRate.SAMPLE_RATE_16000,
       channels: audio.AudioChannel.CHANNEL_1,
@@ -214,39 +273,9 @@ struct Index {
   }
 
   async aboutToAppear() {
-    // 初始化语音识别模型
-    this.workerInstance = new worker.ThreadWorker(this.scriptURL, { name: 'NonStreaming ASR worker' });
-
-    this.workerInstance.onmessage = (e: MessageEvents) => {
-      const msgType = e.data['msgType'] as string;
-      Logger.info(TAG, `receive msg from worker: ${msgType}`);
-
-      if (msgType == 'init-vad-mic-done') {
-        this.micInitDone = true;
-      }
-      if (msgType == 'non-streaming-asr-vad-mic-partial') {
-        this.resultForMic = e.data['text'] as string;
-        // 更新信息
-        this.voiceMessage = this.resultForMic;
-        // 更新提示
-        this.promptMessage2 = this.voiceMessage;
-        // 延时提交
-        setTimeout(() => {
-          // 提交
-          this.submitChat(this.voiceMessage);
-          Logger.info(TAG, `submitChat: ${this.voiceMessage}`);
-          // 还原提示信息
-          this.promptMessage2 = $r('app.string.press_to_talk');
-        }, 300);
-      }
-      if (msgType == 'non-streaming-asr-vad-mic-error') {
-        this.resultForMic = e.data['text'] as string;
-      }
-    }
-
-    const context = getContext();
-    this.workerInstance.postMessage({ msgType: 'init-vad', context });
-    this.workerInstance.postMessage({ msgType: 'init-non-streaming-asr', context });
+    // 延迟初始化语音识别模型，避免启动时加载失败导致崩溃
+    // Worker 创建延迟到用户需要使用语音功能时
+    // 不立即初始化模型，避免模型文件缺失导致应用崩溃
 
     await this.initMic();
 
@@ -296,8 +325,50 @@ struct Index {
         this.ollamaStorage.ipConfig = PreferenceModel.getData('ollama_setting', 'ipConfig');
         this.ollamaStorage.portConfig = PreferenceModel.getData('ollama_setting', 'portConfig');
         this.ollamaStorage.modelName = PreferenceModel.getData('ollama_setting', 'modelSelected');
-        this.aiProvider =
-          new AiProvider('ollama', { baseURL: `${this.ollamaStorage.ipConfig}:${this.ollamaStorage.portConfig}` });
+        
+        // 检查设备模式：如果是边侧模式，使用边侧配置的Ollama地址
+        const deviceMode = PreferenceModel.getData('edge_mode_setting', 'deviceMode');
+        const edgeModeStorage = AppStorageV2.connect(EdgeModeStorage, 'EdgeModeStorage', () => new EdgeModeStorage());
+        
+        let ollamaIp: string;
+        let ollamaPort: string;
+        
+        if (deviceMode === 'edge_side' && edgeModeStorage) {
+          // 边侧模式：使用边侧配置的Ollama地址（直接连接本地Ollama）
+          ollamaIp = edgeModeStorage.ollamaHost || '127.0.0.1';
+          ollamaPort = edgeModeStorage.ollamaPort || '11434';
+          Logger.info(TAG, `Edge side mode: Using direct Ollama connection ${ollamaIp}:${ollamaPort}`);
+        } else {
+          // 端侧模式：使用Ollama设置中的配置（可能是边侧服务器或直接Ollama）
+          ollamaIp = this.ollamaStorage.ipConfig || 'localhost';
+          ollamaPort = this.ollamaStorage.portConfig || '11434';
+          Logger.info(TAG, `End side mode: Using Ollama config ${ollamaIp}:${ollamaPort}`);
+        }
+        
+        // 加载传输类型配置
+        const transportType = PreferenceModel.getData('ollama_setting', 'transportType');
+        if (transportType === 'softbus') {
+          this.ollamaStorage.transportType = 'softbus';
+          this.ollamaStorage.selectedDeviceId = PreferenceModel.getData('ollama_setting', 'softbus_deviceId');
+          this.ollamaStorage.selectedDeviceName = PreferenceModel.getData('ollama_setting', 'softbus_deviceName');
+          this.ollamaStorage.isSoftBusConnected = this.ollamaStorage.selectedDeviceId !== '';
+          // 软总线模式：使用设备ID创建Provider（需要真机才能正常工作）
+          Logger.info(TAG, 'Using SoftBus transport mode');
+          this.aiProvider = new AiProvider('ollama', {
+            baseURL: this.ollamaStorage.selectedDeviceId
+          });
+        } else {
+          // HTTP模式：使用IP+端口
+          this.ollamaStorage.transportType = 'http';
+          // 确保URL包含协议前缀
+          const baseURL = ollamaIp.startsWith('http://') || ollamaIp.startsWith('https://') 
+            ? `${ollamaIp}:${ollamaPort}` 
+            : `http://${ollamaIp}:${ollamaPort}`;
+          Logger.info(TAG, `Creating Ollama provider with baseURL: ${baseURL}`);
+          this.aiProvider = new AiProvider('ollama', {
+            baseURL: baseURL
+          });
+        }
         this.modelSelected = this.ollamaStorage.modelName;
         break;
       case "1":

@@ -13,8 +13,12 @@
  * limitations under the License.
  */
 
+import { TransportType } from '../../transport/ITransport';
+import { DeviceInfo } from '../../transport/softbus/SoftBusProtocol';
+
 @ObservedV2
 export class OllamaStorage {
+  // HTTP连接配置
   @Trace ipConfig: string = '';
   @Trace portConfig: string = '';
   @Trace selectedArray: SelectOption[] = [];
@@ -23,4 +27,14 @@ export class OllamaStorage {
   @Trace isConnect: boolean = false;
   @Trace isSearchingOllama: boolean = false;
   @Trace isToggleOn: boolean = false;
+
+  // 传输类型配置（http或softbus）
+  @Trace transportType: TransportType = 'http';
+
+  // 软总线连接配置
+  @Trace selectedDeviceId: string = '';
+  @Trace selectedDeviceName: string = '';
+  @Trace discoveredDevices: DeviceInfo[] = [];
+  @Trace isSoftBusConnected: boolean = false;
+  @Trace isDiscovering: boolean = false;
 }

@@ -223,6 +223,62 @@
     {
       "name": "title_setting_siliconflow",
       "value": "siliconflow setting"
+    },
+    {
+      "name": "distributed_reason",
+      "value": "Used for distributed data synchronization between devices via SoftBus"
+    },
+    {
+      "name": "device_manager_reason",
+      "value": "Used for device discovery and management in SoftBus distributed communication"
+    },
+    {
+      "name": "transport_type_http",
+      "value": "HTTP"
+    },
+    {
+      "name": "transport_type_softbus",
+      "value": "SoftBus"
+    },
+    {
+      "name": "softbus_device_discovery",
+      "value": "Device Discovery"
+    },
+    {
+      "name": "softbus_start_discovery",
+      "value": "Start Discovery"
+    },
+    {
+      "name": "softbus_stop_discovery",
+      "value": "Stop Discovery"
+    },
+    {
+      "name": "softbus_no_device_found",
+      "value": "No devices found"
+    },
+    {
+      "name": "softbus_connect",
+      "value": "Connect"
+    },
+    {
+      "name": "softbus_disconnect",
+      "value": "Disconnect"
+    },
+    {
+      "name": "softbus_connected",
+      "value": "Connected"
+    },
+    {
+      "name": "softbus_not_supported",
+      "value": "SoftBus is not supported on simulator"
+    },
+    {
+      "name": "transport_mode_select",
+      "value": "Transport Mode"
+    },
+    {
+      "name": "title_setting_edge_mode",
+      "value": "End-Edge Mode"
     }
   ]
 }

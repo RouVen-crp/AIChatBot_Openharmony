@@ -41,6 +41,16 @@ export const SettingRouterArray: Array<settingRouterGroup> = [
     ]
   },
   {
+    type: 'edge_mode',
+    routerArray: [
+      {
+        title: $r('app.string.title_setting_edge_mode'),
+        image: $r('app.media.externaldrive'),
+        url: 'view/EdgeModeSettingComponent'
+      }
+    ]
+  },
+  {
     type: 'other',
     routerArray: [
       {

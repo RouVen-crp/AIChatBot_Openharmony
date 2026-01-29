@@ -15,7 +15,7 @@
 
 import { LvMarkdownIn } from '@luvi/lv-markdown-in';
 import { CircularBuffer } from 'sherpa_onnx';
-import worker, { MessageEvents } from '@ohos.worker';
+import worker, { MessageEvents, ErrorEvent } from '@ohos.worker';
 import audio from '@ohos.multimedia.audio';
 import { VoiceSettings } from "../model/setting/VoiceSettings";
 import { AppStorageV2, promptAction } from "@kit.ArkUI";
@@ -200,18 +200,20 @@ export default struct ChatBox {
 
   async aboutToAppear() {
     this.initAudioRenderer();
-    this.workerInstance = new worker.ThreadWorker(this.scriptURL, { name: 'NonStreaming TTS worker' });
-    this.workerInstance.onmessage = (e: MessageEvents) => {
-      const msgType = e.data['msgType'] as string;
-      Logger.info(TAG, `received msg from worker: ${msgType}`);
-      // 初始化成功
-      if (msgType == 'init-tts-done') {
-        this.sampleRate = e.data['sampleRate'] as number;
-        this.numSpeakers = e.data['numSpeakers'] as number;
-        this.numThreads = e.data['numThreads'] as number;
-        this.initTtsDone = true;
-        Logger.info(TAG, `model initialized, numThreads = ${this.numThreads}`);
-      }
+    // 延迟初始化 TTS Worker，避免启动时加载失败导致崩溃
+    try {
+      this.workerInstance = new worker.ThreadWorker(this.scriptURL, { name: 'NonStreaming TTS worker' });
+      this.workerInstance.onmessage = (e: MessageEvents) => {
+        const msgType = e.data['msgType'] as string;
+        Logger.info(TAG, `received msg from worker: ${msgType}`);
+        // 初始化成功
+        if (msgType == 'init-tts-done') {
+          this.sampleRate = e.data['sampleRate'] as number;
+          this.numSpeakers = e.data['numSpeakers'] as number;
+          this.numThreads = e.data['numThreads'] as number;
+          this.initTtsDone = true;
+          Logger.info(TAG, `model initialized, numThreads = ${this.numThreads}`);
+        }
       // 语音合成
       if (msgType == 'tts-generate-partial') {
         if (this.cancelled) {
@@ -255,9 +257,29 @@ export default struct ChatBox {
           Logger.info(TAG, 'Audio renderer is not initialized. Unable to play audio.');
         }
       }
+      };
+      this.workerInstance.onerror = (e: ErrorEvent) => {
+        Logger.error(TAG, `TTS Worker error: ${JSON.stringify(e)}`);
+        this.initTtsDone = false;
+      };
+    } catch (error) {
+      Logger.error(TAG, `Failed to create TTS worker: ${JSON.stringify(error)}`);
+      this.initTtsDone = false;
+      return;
     }
-    Logger.info(TAG, 'Initializing TTS model ...');
-    this.workerInstance.postMessage({ msgType: 'init-tts', context: getContext() });
+    
+    // 延迟初始化 TTS 模型，避免启动时加载失败导致崩溃
+    setTimeout(() => {
+      try {
+        Logger.info(TAG, 'Initializing TTS model ...');
+        if (this.workerInstance) {
+          this.workerInstance.postMessage({ msgType: 'init-tts', context: getContext() });
+        }
+      } catch (error) {
+        Logger.error(TAG, `Failed to init TTS model: ${JSON.stringify(error)}`);
+        this.initTtsDone = false;
+      }
+    }, 1000);
   }
 
   build() {

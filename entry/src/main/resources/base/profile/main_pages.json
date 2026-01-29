@@ -7,6 +7,8 @@
     "view/NormalSettingComponent",
     "view/ProviderSettingComponent",
     "view/SiliconflowSettingComponent",
-    "view/OllamaUrlInput"
+    "view/OllamaUrlInput",
+    "view/SoftBusDeviceSelector",
+    "view/EdgeModeSettingComponent"
   ]
 }
