@@ -138,10 +138,10 @@ export class EdgeServer {
         try {
           client.off('message');
           client.off('close');
-          const closePromise = client.close().then(() => {
+          const closePromise: Promise<void> = client.close().then(() => {
             Logger.info(TAG, `Client ${clientId} closed`);
-          }).catch((e: Object) => {
-            const errorMsg = e instanceof Error ? e.message : JSON.stringify(e);
+          }).catch((e: Error) => {
+            const errorMsg = this.formatErrorMessage(e);
             Logger.warn(TAG, `Error closing client ${clientId}: ${errorMsg}`);
           });
           closePromises.push(closePromise);
@@ -166,6 +166,13 @@ export class EdgeServer {
       Logger.error(TAG, `Error stopping server: ${JSON.stringify(error)}`);
       this.setState(ServerState.ERROR);
     }
+  }
+
+  /**
+   * 格式化错误消息
+   */
+  private formatErrorMessage(error: Error): string {
+    return error.message;
   }
 
   /**

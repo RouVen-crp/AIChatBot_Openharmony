@@ -7,11 +7,11 @@
         "material": {
           "certpath": "C:\\Users\\Rou_V\\.ohos\\config\\default_AIModelChat_api12_0128_Q-IN_WVZINV2pnw6ddm2FYjoQfbEZnGAJVZvfHZk-NU=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B03274256B11462D351BE695ACCE0598B23A6F8EE81D6081CB93BBDE956D88C07E7CD15F5CF81E0",
+          "keyPassword": "0000001BAFC3ADD416BEB7DCE1645B914C87B90FE49531CBC9064E595E03D3EA448FE4F625BA285E7C20E4",
           "profile": "C:\\Users\\Rou_V\\.ohos\\config\\default_AIModelChat_api12_0128_Q-IN_WVZINV2pnw6ddm2FYjoQfbEZnGAJVZvfHZk-NU=.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "C:\\Users\\Rou_V\\.ohos\\config\\default_AIModelChat_api12_0128_Q-IN_WVZINV2pnw6ddm2FYjoQfbEZnGAJVZvfHZk-NU=.p12",
-          "storePassword": "0000001B19B8079CD734EA66EC9BF249CB715E3115403CB1BEF12904DD9311C87F6BD03EF78A1489FCBF55"
+          "storePassword": "0000001BD24D9B5341675AAA40B5E7DFEFAB36AB66597DB14DD1B22AD2FF5E3DEF45E192642AA4822E914B"
         }
       }
     ],
@@ -19,15 +19,21 @@
       {
         "name": "default",
         "signingConfig": "default",
-        "targetSdkVersion": "6.0.0(20)",
+        "compileSdkVersion": 20,
+        "targetSdkVersion": 20,
         // 修改点：与compileSdkVersion保持一致
-        "compatibleSdkVersion": "6.0.0(20)",
-        // 修改点：保持为API 12
-        "runtimeOS": "HarmonyOS",
+        "compatibleSdkVersion": 20,
+        "runtimeOS": "OpenHarmony",
+        //        "targetSdkVersion": "6.0.0(20)",
+        //        // 修改点：与compileSdkVersion保持一致
+        //        "compatibleSdkVersion": "6.0.0(20)",
+        //        // 修改点：保持为API 12
+        //        "runtimeOS": "HarmonyOS",
+
         "buildOption": {
           "strictMode": {
             "caseSensitiveCheck": true,
-            "useNormalizedOHMUrl": true
+            "useNormalizedOHMUrl": false
           }
         }
       }

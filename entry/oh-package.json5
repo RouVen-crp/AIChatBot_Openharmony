@@ -6,7 +6,8 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "sherpa_onnx": "1.11.2"
+    "sherpa_onnx": "1.11.2",
+    "libsherpa_onnx.so": "file:../oh_modules/.ohpm/sherpa_onnx@1.11.2/oh_modules/sherpa_onnx/src/main/cpp/types/libsherpa_onnx"
   }
 }
 

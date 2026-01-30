@@ -14,7 +14,7 @@
  */
 
 import { LvMarkdownIn } from '@luvi/lv-markdown-in';
-import { CircularBuffer } from 'sherpa_onnx';
+// import { CircularBuffer } from 'sherpa_onnx';
 import worker, { MessageEvents, ErrorEvent } from '@ohos.worker';
 import audio from '@ohos.multimedia.audio';
 import { VoiceSettings } from "../model/setting/VoiceSettings";
@@ -53,28 +53,28 @@ export default struct ChatBox {
   private inputText: string = '';
   private workerInstance?: worker.ThreadWorker;
   private readonly scriptURL: string = 'entry/ets/workers/NonStreamingTtsWorker.ets';
-  private sampleBuffer: CircularBuffer = new CircularBuffer(16000 * 5);
+  // private sampleBuffer: CircularBuffer = new CircularBuffer(16000 * 5);
   private finalSamples: Float32Array | null = null;
   private audioRenderer: audio.AudioRenderer | null = null;
   private audioPlayCallback = (buffer: ArrayBuffer) => {
-    const numSamples = buffer.byteLength / 2;
-    if (this.sampleBuffer.size() >= numSamples) {
-      const samples: Float32Array = this.sampleBuffer.get(this.sampleBuffer.head(), numSamples);
-      const int16Samples = new Int16Array(buffer);
-      for (let i = 0; i < numSamples; ++i) {
-        let s = samples[i] * 32767;
-        s = s > 32767 ? 32767 : s;
-        s = s < -32768 ? -32768 : s;
-        int16Samples[i] = s;
-      }
-      this.sampleBuffer.pop(numSamples);
-    } else {
+    // const numSamples = buffer.byteLength / 2;
+    // if (this.sampleBuffer.size() >= numSamples) {
+    //   const samples: Float32Array = this.sampleBuffer.get(this.sampleBuffer.head(), numSamples);
+    //   const int16Samples = new Int16Array(buffer);
+    //   for (let i = 0; i < numSamples; ++i) {
+    //     let s = samples[i] * 32767;
+    //     s = s > 32767 ? 32767 : s;
+    //     s = s < -32768 ? -32768 : s;
+    //     int16Samples[i] = s;
+    //   }
+    //   this.sampleBuffer.pop(numSamples);
+    // } else {
       (new Int16Array(buffer)).fill(0);
       if (this.ttsGeneratedDone) {
         this.audioRenderer?.stop();
         this.btnStartEnabled = true;
       }
-    }
+    // }
   };
 
   initAudioRenderer() {
@@ -107,9 +107,9 @@ export default struct ChatBox {
         if (renderer) {
           this.audioRenderer = renderer;
           this.audioRenderer.on('writeData', this.audioPlayCallback);
-          if (this.sampleBuffer.size()) {
-            this.audioRenderer.start();
-          }
+          // if (this.sampleBuffer.size()) {
+          //   this.audioRenderer.start();
+          // }
           // 监听状态变化
           this.audioRenderer.on('stateChange', (state: audio.AudioState) => {
             if (state == audio.AudioState.STATE_RUNNING) {
@@ -142,7 +142,7 @@ export default struct ChatBox {
       Logger.info(TAG, 'Generating audio');
       this.cancelled = false;
       this.finalSamples = null;
-      this.sampleBuffer.reset();
+      // this.sampleBuffer.reset();
       this.ttsGeneratedDone = false;
 
       Logger.info(TAG, `send text to worker: ${this.inputText}`);
@@ -162,7 +162,7 @@ export default struct ChatBox {
   // 停止
   private stop() {
     this.ttsGeneratedDone = true;
-    this.sampleBuffer.reset();
+    // this.sampleBuffer.reset();
     this.cancelled = true;
     this.isGenerating = false;
 
@@ -221,7 +221,7 @@ export default struct ChatBox {
           return;
         }
         const samples: Float32Array = e.data['samples'] as Float32Array;
-        this.sampleBuffer.push(samples);
+        // this.sampleBuffer.push(samples);
         if (!this.initAudioDone) {
           this.initAudioRenderer();
         }
@@ -247,10 +247,10 @@ export default struct ChatBox {
         this.finalSamples = samples;
         this.ttsGeneratedDone = true;
 
-        if (this.audioRenderer && this.audioRenderer?.state != audio.AudioState.STATE_RUNNING &&
-          this.sampleBuffer.size() == 0) {
-          this.sampleBuffer.push(samples);
-        }
+        // if (this.audioRenderer && this.audioRenderer?.state != audio.AudioState.STATE_RUNNING &&
+        //   this.sampleBuffer.size() == 0) {
+        //   this.sampleBuffer.push(samples);
+        // }
 
         if (!this.initAudioDone) {
           this.btnStartEnabled = true;
